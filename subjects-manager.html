@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة المواد الدراسية - مركز التعليم العربي</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            direction: rtl;
+            text-align: right;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .actions-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 12px 24px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-success {
+            background: linear-gradient(45deg, #28a745, #20c997);
+        }
+
+        .btn-danger {
+            background: linear-gradient(45deg, #dc3545, #c82333);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(45deg, #6c757d, #5a6268);
+        }
+
+        .btn-small {
+            padding: 8px 16px;
+            font-size: 0.9rem;
+        }
+
+        .subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .subject-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .subject-card:hover {
+            transform: translateY(-5px);
+            border-color: #667eea;
+        }
+
+        .subject-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .subject-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .subject-icon {
+            font-size: 2rem;
+            color: #667eea;
+        }
+
+        .subject-info {
+            margin-bottom: 1rem;
+        }
+
+        .subject-info p {
+            margin-bottom: 0.5rem;
+            color: #666;
+        }
+
+        .subject-actions {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: flex-end;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+        }
+
+        .close {
+            color: #aaa;
+            float: left;
+            font-size: 28px;
+            font-weight: bold;
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Cairo', sans-serif;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .demo-note {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(102, 126, 234, 0.2);
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .subjects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .actions-bar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .subject-actions {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-book"></i> إدارة المواد الدراسية</h1>
+            <p>إضافة وتعديل وحذف المواد الدراسية في المركز</p>
+        </div>
+
+        <div class="demo-note">
+            <i class="fas fa-info-circle"></i>
+            <strong>ملاحظة:</strong> هذا موقع تجريبي للعرض فقط. التغييرات لن يتم حفظها فعلياً.
+        </div>
+
+        <div class="alert alert-success" id="successAlert">
+            <i class="fas fa-check-circle"></i>
+            <span id="successMessage">تم تنفيذ العملية بنجاح!</span>
+        </div>
+
+        <div class="alert alert-error" id="errorAlert">
+            <i class="fas fa-exclamation-triangle"></i>
+            <span id="errorMessage">حدث خطأ أثناء تنفيذ العملية.</span>
+        </div>
+
+        <div class="actions-bar">
+            <button class="btn btn-success" onclick="openAddModal()">
+                <i class="fas fa-plus"></i>
+                إضافة مادة جديدة
+            </button>
+            
+            <div>
+                <a href="admin.html" class="btn btn-secondary">
+                    <i class="fas fa-arrow-right"></i>
+                    العودة للوحة التحكم
+                </a>
+                <a href="index.html" class="btn btn-secondary">
+                    <i class="fas fa-home"></i>
+                    الرئيسية
+                </a>
+            </div>
+        </div>
+
+        <div class="subjects-grid" id="subjectsGrid">
+            <!-- سيتم ملء المواد هنا بواسطة JavaScript -->
+        </div>
+
+        <div class="footer">
+            <p>جميع الحقوق محفوظة لشركة مكة للبرمجيات م/ محمد صلاح</p>
+            <p>مبني بـ HTML5 و CSS3 و JavaScript</p>
+        </div>
+    </div>
+
+    <!-- Modal إضافة/تعديل مادة -->
+    <div id="subjectModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle">إضافة مادة جديدة</h2>
+            
+            <form id="subjectForm">
+                <input type="hidden" id="subjectId" name="subjectId">
+                
+                <div class="form-group">
+                    <label for="subjectName">اسم المادة *</label>
+                    <input type="text" id="subjectName" name="subjectName" required 
+                           placeholder="مثال: الرياضيات">
+                </div>
+
+                <div class="form-group">
+                    <label for="subjectCode">رمز المادة *</label>
+                    <input type="text" id="subjectCode" name="subjectCode" required 
+                           placeholder="مثال: MATH">
+                </div>
+
+                <div class="form-group">
+                    <label for="subjectDescription">وصف المادة</label>
+                    <textarea id="subjectDescription" name="subjectDescription" 
+                              placeholder="وصف مختصر عن المادة الدراسية"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="subjectIcon">أيقونة المادة</label>
+                    <select id="subjectIcon" name="subjectIcon">
+                        <option value="fas fa-calculator">آلة حاسبة (رياضيات)</option>
+                        <option value="fas fa-atom">ذرة (فيزياء)</option>
+                        <option value="fas fa-flask">قارورة (كيمياء)</option>
+                        <option value="fas fa-dna">DNA (أحياء)</option>
+                        <option value="fas fa-language">لغة (عربي)</option>
+                        <option value="fas fa-globe">كرة أرضية (إنجليزي)</option>
+                        <option value="fas fa-landmark">معلم (تاريخ)</option>
+                        <option value="fas fa-map">خريطة (جغرافيا)</option>
+                        <option value="fas fa-book">كتاب (عام)</option>
+                    </select>
+                </div>
+
+                <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">
+                        إلغاء
+                    </button>
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-save"></i>
+                        حفظ
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // بيانات المواد الدراسية (محفوظة في localStorage)
+        let subjects = JSON.parse(localStorage.getItem('subjects')) || [
+            {
+                id: 1,
+                name: 'الرياضيات',
+                code: 'MATH',
+                description: 'علم الأرقام والحسابات والهندسة',
+                icon: 'fas fa-calculator',
+                teachersCount: 2,
+                studentsCount: 45
+            },
+            {
+                id: 2,
+                name: 'الفيزياء',
+                code: 'PHYS',
+                description: 'علم دراسة المادة والطاقة والحركة',
+                icon: 'fas fa-atom',
+                teachersCount: 1,
+                studentsCount: 28
+            },
+            {
+                id: 3,
+                name: 'الكيمياء',
+                code: 'CHEM',
+                description: 'علم دراسة المواد والتفاعلات الكيميائية',
+                icon: 'fas fa-flask',
+                teachersCount: 1,
+                studentsCount: 32
+            },
+            {
+                id: 4,
+                name: 'الأحياء',
+                code: 'BIO',
+                description: 'علم دراسة الكائنات الحية',
+                icon: 'fas fa-dna',
+                teachersCount: 1,
+                studentsCount: 25
+            },
+            {
+                id: 5,
+                name: 'اللغة العربية',
+                code: 'ARAB',
+                description: 'تعلم قواعد وأدب اللغة العربية',
+                icon: 'fas fa-language',
+                teachersCount: 1,
+                studentsCount: 38
+            },
+            {
+                id: 6,
+                name: 'اللغة الإنجليزية',
+                code: 'ENG',
+                description: 'تعلم اللغة الإنجليزية ومهارات التواصل',
+                icon: 'fas fa-globe',
+                teachersCount: 1,
+                studentsCount: 42
+            }
+        ];
+
+        // عرض المواد
+        function displaySubjects() {
+            const grid = document.getElementById('subjectsGrid');
+            grid.innerHTML = '';
+
+            subjects.forEach(subject => {
+                const card = document.createElement('div');
+                card.className = 'subject-card';
+                card.innerHTML = `
+                    <div class="subject-header">
+                        <div class="subject-name">${subject.name}</div>
+                        <div class="subject-icon">
+                            <i class="${subject.icon}"></i>
+                        </div>
+                    </div>
+                    <div class="subject-info">
+                        <p><strong>الرمز:</strong> ${subject.code}</p>
+                        <p><strong>الوصف:</strong> ${subject.description || 'لا يوجد وصف'}</p>
+                        <p><strong>المدرسين:</strong> ${subject.teachersCount}</p>
+                        <p><strong>الطلاب:</strong> ${subject.studentsCount}</p>
+                    </div>
+                    <div class="subject-actions">
+                        <button class="btn btn-small" onclick="editSubject(${subject.id})">
+                            <i class="fas fa-edit"></i>
+                            تعديل
+                        </button>
+                        <button class="btn btn-danger btn-small" onclick="deleteSubject(${subject.id})">
+                            <i class="fas fa-trash"></i>
+                            حذف
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // فتح modal الإضافة
+        function openAddModal() {
+            document.getElementById('modalTitle').textContent = 'إضافة مادة جديدة';
+            document.getElementById('subjectForm').reset();
+            document.getElementById('subjectId').value = '';
+            document.getElementById('subjectModal').style.display = 'block';
+        }
+
+        // تعديل مادة
+        function editSubject(id) {
+            const subject = subjects.find(s => s.id === id);
+            if (subject) {
+                document.getElementById('modalTitle').textContent = 'تعديل المادة';
+                document.getElementById('subjectId').value = subject.id;
+                document.getElementById('subjectName').value = subject.name;
+                document.getElementById('subjectCode').value = subject.code;
+                document.getElementById('subjectDescription').value = subject.description || '';
+                document.getElementById('subjectIcon').value = subject.icon;
+                document.getElementById('subjectModal').style.display = 'block';
+            }
+        }
+
+        // حذف مادة
+        function deleteSubject(id) {
+            if (confirm('هل أنت متأكد من حذف هذه المادة؟')) {
+                subjects = subjects.filter(s => s.id !== id);
+                localStorage.setItem('subjects', JSON.stringify(subjects));
+                displaySubjects();
+                showAlert('success', 'تم حذف المادة بنجاح!');
+            }
+        }
+
+        // إغلاق modal
+        function closeModal() {
+            document.getElementById('subjectModal').style.display = 'none';
+        }
+
+        // عرض تنبيه
+        function showAlert(type, message) {
+            const successAlert = document.getElementById('successAlert');
+            const errorAlert = document.getElementById('errorAlert');
+            
+            successAlert.style.display = 'none';
+            errorAlert.style.display = 'none';
+            
+            if (type === 'success') {
+                document.getElementById('successMessage').textContent = message;
+                successAlert.style.display = 'block';
+                setTimeout(() => successAlert.style.display = 'none', 3000);
+            } else {
+                document.getElementById('errorMessage').textContent = message;
+                errorAlert.style.display = 'block';
+                setTimeout(() => errorAlert.style.display = 'none', 3000);
+            }
+        }
+
+        // معالجة النموذج
+        document.getElementById('subjectForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const subjectData = {
+                name: formData.get('subjectName'),
+                code: formData.get('subjectCode'),
+                description: formData.get('subjectDescription'),
+                icon: formData.get('subjectIcon')
+            };
+            
+            const id = formData.get('subjectId');
+            
+            if (id) {
+                // تعديل مادة موجودة
+                const index = subjects.findIndex(s => s.id == id);
+                if (index !== -1) {
+                    subjects[index] = { ...subjects[index], ...subjectData };
+                    showAlert('success', 'تم تحديث المادة بنجاح!');
+                }
+            } else {
+                // إضافة مادة جديدة
+                const newSubject = {
+                    id: Date.now(),
+                    ...subjectData,
+                    teachersCount: 0,
+                    studentsCount: 0
+                };
+                subjects.push(newSubject);
+                showAlert('success', 'تم إضافة المادة بنجاح!');
+            }
+            
+            localStorage.setItem('subjects', JSON.stringify(subjects));
+            displaySubjects();
+            closeModal();
+        });
+
+        // إغلاق modal عند النقر خارجه
+        window.onclick = function(event) {
+            const modal = document.getElementById('subjectModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        // تحميل المواد عند تحميل الصفحة
+        window.addEventListener('load', displaySubjects);
+    </script>
+</body>
+</html>

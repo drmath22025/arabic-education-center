@@ -1,460 +1,518 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>لوحة التحكم الإدارية - مركز التعليم العربي</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-        body {
-            font-family: 'Cairo', sans-serif;
-            line-height: 1.6;
-            color: #333;
-            direction: rtl;
-            text-align: right;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-        }
+      body {
+        font-family: 'Cairo', sans-serif;
+        line-height: 1.6;
+        color: #333;
+        direction: rtl;
+        text-align: right;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+      }
 
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      .login-container {
+        max-width: 500px;
+        margin: 5rem auto;
+        padding: 2rem;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10px);
+        text-align: center;
+      }
+
+      .dashboard-container {
+        display: none;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10px);
+        padding: 2rem;
+        margin-top: 2rem;
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+
+      .header h1 {
+        font-size: 2.5rem;
+        color: #333;
+        margin-bottom: 0.5rem;
+      }
+
+      .header p {
+        color: #666;
+        font-size: 1.1rem;
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+        text-align: right;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        color: #333;
+      }
+
+      input {
+        width: 100%;
+        padding: 12px 16px;
+        border: 2px solid #e1e5e9;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-family: 'Cairo', sans-serif;
+        transition: border-color 0.3s ease;
+      }
+
+      input:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 15px 30px;
+        background: linear-gradient(45deg, #667eea, #764ba2);
+        color: white;
+        text-decoration: none;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-family: 'Cairo', sans-serif;
+        width: 100%;
+        justify-content: center;
+      }
+
+      .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+      }
+
+      .btn-secondary {
+        background: linear-gradient(45deg, #6c757d, #5a6268);
+        width: auto;
+        margin-top: 1rem;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+      }
+
+      .stat-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        transition: transform 0.3s ease;
+      }
+
+      .stat-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .stat-icon {
+        font-size: 2.5rem;
+        color: #667eea;
+        margin-bottom: 1rem;
+      }
+
+      .stat-number {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 0.5rem;
+      }
+
+      .stat-label {
+        color: #666;
+        font-size: 1rem;
+      }
+
+      .recent-registrations {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .section-title {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid #667eea;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .registration-item {
+        padding: 1rem;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .registration-item:last-child {
+        border-bottom: none;
+      }
+
+      .student-info h4 {
+        color: #333;
+        margin-bottom: 0.25rem;
+      }
+
+      .student-info p {
+        color: #666;
+        font-size: 0.9rem;
+      }
+
+      .registration-time {
+        color: #999;
+        font-size: 0.8rem;
+      }
+
+      .alert {
+        padding: 1rem;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        display: none;
+      }
+
+      .alert-error {
+        background: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+      }
+
+      .demo-note {
+        background: #fff3cd;
+        color: #856404;
+        border: 1px solid #ffeaa7;
+        padding: 1rem;
+        border-radius: 8px;
+        margin-bottom: 2rem;
+        text-align: center;
+      }
+
+      @media (max-width: 768px) {
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
+          padding: 1rem;
         }
 
         .login-container {
-            max-width: 500px;
-            margin: 5rem auto;
-            padding: 2rem;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px);
-            text-align: center;
-        }
-
-        .dashboard-container {
-            display: none;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px);
-            padding: 2rem;
-            margin-top: 2rem;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 2rem;
+          margin: 2rem auto;
+          padding: 1.5rem;
         }
 
         .header h1 {
-            font-size: 2.5rem;
-            color: #333;
-            margin-bottom: 0.5rem;
-        }
-
-        .header p {
-            color: #666;
-            font-size: 1.1rem;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-            text-align: right;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: #333;
-        }
-
-        input {
-            width: 100%;
-            padding: 12px 16px;
-            border: 2px solid #e1e5e9;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-family: 'Cairo', sans-serif;
-            transition: border-color 0.3s ease;
-        }
-
-        input:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 15px 30px;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            color: white;
-            text-decoration: none;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Cairo', sans-serif;
-            width: 100%;
-            justify-content: center;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
-        }
-
-        .btn-secondary {
-            background: linear-gradient(45deg, #6c757d, #5a6268);
-            width: auto;
-            margin-top: 1rem;
+          font-size: 2rem;
         }
 
         .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
+          grid-template-columns: 1fr;
         }
-
-        .stat-card {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            transition: transform 0.3s ease;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .stat-icon {
-            font-size: 2.5rem;
-            color: #667eea;
-            margin-bottom: 1rem;
-        }
-
-        .stat-number {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #333;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            color: #666;
-            font-size: 1rem;
-        }
-
-        .recent-registrations {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .section-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid #667eea;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .registration-item {
-            padding: 1rem;
-            border-bottom: 1px solid #eee;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .registration-item:last-child {
-            border-bottom: none;
-        }
-
-        .student-info h4 {
-            color: #333;
-            margin-bottom: 0.25rem;
-        }
-
-        .student-info p {
-            color: #666;
-            font-size: 0.9rem;
-        }
-
-        .registration-time {
-            color: #999;
-            font-size: 0.8rem;
-        }
-
-        .alert {
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            display: none;
-        }
-
-        .alert-error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-
-        .demo-note {
-            background: #fff3cd;
-            color: #856404;
-            border: 1px solid #ffeaa7;
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 1rem;
-            }
-
-            .login-container {
-                margin: 2rem auto;
-                padding: 1.5rem;
-            }
-
-            .header h1 {
-                font-size: 2rem;
-            }
-
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <!-- صفحة تسجيل الدخول -->
     <div class="login-container" id="loginContainer">
-        <div class="header">
-            <h1><i class="fas fa-shield-alt"></i> تسجيل دخول الإدارة</h1>
-            <p>أدخل بيانات الدخول للوصول إلى لوحة التحكم</p>
+      <div class="header">
+        <h1><i class="fas fa-shield-alt"></i> تسجيل دخول الإدارة</h1>
+        <p>أدخل بيانات الدخول للوصول إلى لوحة التحكم</p>
+      </div>
+
+      <div class="demo-note">
+        <i class="fas fa-info-circle"></i>
+        <strong>للتجربة:</strong> اسم المستخدم: admin | كلمة المرور: 123456
+      </div>
+
+      <div class="alert alert-error" id="loginError">
+        <i class="fas fa-exclamation-triangle"></i>
+        اسم المستخدم أو كلمة المرور غير صحيحة.
+      </div>
+
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="username">اسم المستخدم</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            required
+            placeholder="أدخل اسم المستخدم"
+          />
         </div>
 
-        <div class="demo-note">
-            <i class="fas fa-info-circle"></i>
-            <strong>للتجربة:</strong> اسم المستخدم: admin | كلمة المرور: 123456
+        <div class="form-group">
+          <label for="password">كلمة المرور</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            required
+            placeholder="أدخل كلمة المرور"
+          />
         </div>
 
-        <div class="alert alert-error" id="loginError">
-            <i class="fas fa-exclamation-triangle"></i>
-            اسم المستخدم أو كلمة المرور غير صحيحة.
-        </div>
+        <button type="submit" class="btn">
+          <i class="fas fa-sign-in-alt"></i>
+          تسجيل الدخول
+        </button>
 
-        <form id="loginForm">
-            <div class="form-group">
-                <label for="username">اسم المستخدم</label>
-                <input type="text" id="username" name="username" required 
-                       placeholder="أدخل اسم المستخدم">
-            </div>
-
-            <div class="form-group">
-                <label for="password">كلمة المرور</label>
-                <input type="password" id="password" name="password" required 
-                       placeholder="أدخل كلمة المرور">
-            </div>
-
-            <button type="submit" class="btn">
-                <i class="fas fa-sign-in-alt"></i>
-                تسجيل الدخول
-            </button>
-
-            <a href="index.html" class="btn btn-secondary">
-                <i class="fas fa-arrow-right"></i>
-                العودة للرئيسية
-            </a>
-        </form>
+        <a href="index.html" class="btn btn-secondary">
+          <i class="fas fa-arrow-right"></i>
+          العودة للرئيسية
+        </a>
+      </form>
     </div>
 
     <!-- لوحة التحكم -->
     <div class="container">
-        <div class="dashboard-container" id="dashboardContainer">
-            <div class="header">
-                <h1><i class="fas fa-tachometer-alt"></i> لوحة التحكم الإدارية</h1>
-                <p>مرحباً بك في نظام إدارة مركز التعليم العربي</p>
-            </div>
-
-            <div class="demo-note">
-                <i class="fas fa-info-circle"></i>
-                <strong>ملاحظة:</strong> هذا موقع تجريبي للعرض فقط. البيانات المعروضة تجريبية.
-            </div>
-
-            <!-- الإحصائيات -->
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <div class="stat-number">156</div>
-                    <div class="stat-label">إجمالي الطلاب</div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-chalkboard-teacher"></i>
-                    </div>
-                    <div class="stat-number">12</div>
-                    <div class="stat-label">عدد المدرسين</div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-layer-group"></i>
-                    </div>
-                    <div class="stat-number">24</div>
-                    <div class="stat-label">المجموعات النشطة</div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-calendar-check"></i>
-                    </div>
-                    <div class="stat-number">8</div>
-                    <div class="stat-label">تسجيلات اليوم</div>
-                </div>
-            </div>
-
-            <!-- التسجيلات الحديثة -->
-            <div class="recent-registrations">
-                <h3 class="section-title">
-                    <i class="fas fa-clock"></i>
-                    التسجيلات الحديثة
-                </h3>
-
-                <div class="registration-item">
-                    <div class="student-info">
-                        <h4>أحمد محمد علي</h4>
-                        <p>الرياضيات - أحمد محمد علي - المجموعة الأولى</p>
-                    </div>
-                    <div class="registration-time">منذ 5 دقائق</div>
-                </div>
-
-                <div class="registration-item">
-                    <div class="student-info">
-                        <h4>فاطمة أحمد حسن</h4>
-                        <p>الفيزياء - محمد عبدالله سالم - مجموعة المبتدئين</p>
-                    </div>
-                    <div class="registration-time">منذ 15 دقيقة</div>
-                </div>
-
-                <div class="registration-item">
-                    <div class="student-info">
-                        <h4>عبدالرحمن خالد</h4>
-                        <p>الكيمياء - عائشة محمد أحمد - المجموعة المتوسطة</p>
-                    </div>
-                    <div class="registration-time">منذ 30 دقيقة</div>
-                </div>
-
-                <div class="registration-item">
-                    <div class="student-info">
-                        <h4>نورا سعد محمد</h4>
-                        <p>اللغة العربية - نورا سعد محمد - المجموعة الأساسية</p>
-                    </div>
-                    <div class="registration-time">منذ ساعة</div>
-                </div>
-
-                <div class="registration-item">
-                    <div class="student-info">
-                        <h4>سارة عبدالعزيز</h4>
-                        <p>اللغة الإنجليزية - سارة عبدالعزيز - مجموعة المحادثة</p>
-                    </div>
-                    <div class="registration-time">منذ ساعتين</div>
-                </div>
-            </div>
-
-            <div style="text-align: center; margin-top: 2rem;">
-                <button onclick="logout()" class="btn btn-secondary">
-                    <i class="fas fa-sign-out-alt"></i>
-                    تسجيل الخروج
-                </button>
-            </div>
+      <div class="dashboard-container" id="dashboardContainer">
+        <div class="header">
+          <h1><i class="fas fa-tachometer-alt"></i> لوحة التحكم الإدارية</h1>
+          <p>مرحباً بك في نظام إدارة مركز التعليم العربي</p>
         </div>
+
+        <div class="demo-note">
+          <i class="fas fa-info-circle"></i>
+          <strong>ملاحظة:</strong> هذا موقع تجريبي للعرض فقط. البيانات المعروضة تجريبية.
+        </div>
+
+        <!-- الإحصائيات -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-users"></i>
+            </div>
+            <div class="stat-number">156</div>
+            <div class="stat-label">إجمالي الطلاب</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-chalkboard-teacher"></i>
+            </div>
+            <div class="stat-number">12</div>
+            <div class="stat-label">عدد المدرسين</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-layer-group"></i>
+            </div>
+            <div class="stat-number">24</div>
+            <div class="stat-label">المجموعات النشطة</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-calendar-check"></i>
+            </div>
+            <div class="stat-number">8</div>
+            <div class="stat-label">تسجيلات اليوم</div>
+          </div>
+        </div>
+
+        <!-- التسجيلات الحديثة -->
+        <div class="recent-registrations">
+          <h3 class="section-title">
+            <i class="fas fa-clock"></i>
+            التسجيلات الحديثة
+          </h3>
+
+          <div class="registration-item">
+            <div class="student-info">
+              <h4>أحمد محمد علي</h4>
+              <p>الرياضيات - أحمد محمد علي - المجموعة الأولى</p>
+            </div>
+            <div class="registration-time">منذ 5 دقائق</div>
+          </div>
+
+          <div class="registration-item">
+            <div class="student-info">
+              <h4>فاطمة أحمد حسن</h4>
+              <p>الفيزياء - محمد عبدالله سالم - مجموعة المبتدئين</p>
+            </div>
+            <div class="registration-time">منذ 15 دقيقة</div>
+          </div>
+
+          <div class="registration-item">
+            <div class="student-info">
+              <h4>عبدالرحمن خالد</h4>
+              <p>الكيمياء - عائشة محمد أحمد - المجموعة المتوسطة</p>
+            </div>
+            <div class="registration-time">منذ 30 دقيقة</div>
+          </div>
+
+          <div class="registration-item">
+            <div class="student-info">
+              <h4>نورا سعد محمد</h4>
+              <p>اللغة العربية - نورا سعد محمد - المجموعة الأساسية</p>
+            </div>
+            <div class="registration-time">منذ ساعة</div>
+          </div>
+
+          <div class="registration-item">
+            <div class="student-info">
+              <h4>سارة عبدالعزيز</h4>
+              <p>اللغة الإنجليزية - سارة عبدالعزيز - مجموعة المحادثة</p>
+            </div>
+            <div class="registration-time">منذ ساعتين</div>
+          </div>
+        </div>
+
+        <div
+          style="
+            text-align: center;
+            margin-top: 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+          "
+        >
+          <a href="subjects-manager.html" class="btn">
+            <i class="fas fa-book"></i>
+            إدارة المواد الدراسية
+          </a>
+          <a href="teachers-manager.html" class="btn">
+            <i class="fas fa-chalkboard-teacher"></i>
+            إدارة المدرسين
+          </a>
+          <a href="groups-manager.html" class="btn">
+            <i class="fas fa-layer-group"></i>
+            إدارة المجموعات
+          </a>
+          <button onclick="logout()" class="btn btn-secondary">
+            <i class="fas fa-sign-out-alt"></i>
+            تسجيل الخروج
+          </button>
+        </div>
+
+        <div
+          class="footer"
+          style="
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(102, 126, 234, 0.2);
+            color: #666;
+            font-size: 0.9rem;
+          "
+        >
+          <p>جميع الحقوق محفوظة لشركة مكة للبرمجيات م/ محمد صلاح</p>
+          <p>مبني بـ HTML5 و CSS3 و JavaScript</p>
+        </div>
+      </div>
     </div>
 
     <script>
-        // معالجة تسجيل الدخول
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            
-            // بيانات تجريبية للدخول
-            if (username === 'admin' && password === '123456') {
-                // إخفاء صفحة تسجيل الدخول وإظهار لوحة التحكم
-                document.getElementById('loginContainer').style.display = 'none';
-                document.getElementById('dashboardContainer').style.display = 'block';
-                
-                // حفظ حالة تسجيل الدخول
-                localStorage.setItem('isLoggedIn', 'true');
-            } else {
-                // إظهار رسالة خطأ
-                document.getElementById('loginError').style.display = 'block';
-                setTimeout(() => {
-                    document.getElementById('loginError').style.display = 'none';
-                }, 3000);
-            }
-        });
+      // معالجة تسجيل الدخول
+      document.getElementById('loginForm').addEventListener('submit', function (e) {
+        e.preventDefault()
 
-        // دالة تسجيل الخروج
-        function logout() {
-            localStorage.removeItem('isLoggedIn');
-            document.getElementById('loginContainer').style.display = 'block';
-            document.getElementById('dashboardContainer').style.display = 'none';
-            document.getElementById('loginForm').reset();
+        const username = document.getElementById('username').value
+        const password = document.getElementById('password').value
+
+        // بيانات تجريبية للدخول
+        if (username === 'admin' && password === '123456') {
+          // إخفاء صفحة تسجيل الدخول وإظهار لوحة التحكم
+          document.getElementById('loginContainer').style.display = 'none'
+          document.getElementById('dashboardContainer').style.display = 'block'
+
+          // حفظ حالة تسجيل الدخول
+          localStorage.setItem('isLoggedIn', 'true')
+        } else {
+          // إظهار رسالة خطأ
+          document.getElementById('loginError').style.display = 'block'
+          setTimeout(() => {
+            document.getElementById('loginError').style.display = 'none'
+          }, 3000)
         }
+      })
 
-        // فحص حالة تسجيل الدخول عند تحميل الصفحة
-        window.addEventListener('load', function() {
-            if (localStorage.getItem('isLoggedIn') === 'true') {
-                document.getElementById('loginContainer').style.display = 'none';
-                document.getElementById('dashboardContainer').style.display = 'block';
-            }
-        });
+      // دالة تسجيل الخروج
+      function logout() {
+        localStorage.removeItem('isLoggedIn')
+        document.getElementById('loginContainer').style.display = 'block'
+        document.getElementById('dashboardContainer').style.display = 'none'
+        document.getElementById('loginForm').reset()
+      }
 
-        // تحديث الوقت للتسجيلات
-        function updateRegistrationTimes() {
-            // محاكاة تحديث أوقات التسجيل
-            const times = ['منذ 6 دقائق', 'منذ 16 دقيقة', 'منذ 31 دقيقة', 'منذ ساعة و دقيقة', 'منذ ساعتين و دقيقة'];
-            const timeElements = document.querySelectorAll('.registration-time');
-            
-            timeElements.forEach((element, index) => {
-                if (times[index]) {
-                    element.textContent = times[index];
-                }
-            });
+      // فحص حالة تسجيل الدخول عند تحميل الصفحة
+      window.addEventListener('load', function () {
+        if (localStorage.getItem('isLoggedIn') === 'true') {
+          document.getElementById('loginContainer').style.display = 'none'
+          document.getElementById('dashboardContainer').style.display = 'block'
         }
+      })
 
-        // تحديث الأوقات كل دقيقة
-        setInterval(updateRegistrationTimes, 60000);
+      // تحديث الوقت للتسجيلات
+      function updateRegistrationTimes() {
+        // محاكاة تحديث أوقات التسجيل
+        const times = [
+          'منذ 6 دقائق',
+          'منذ 16 دقيقة',
+          'منذ 31 دقيقة',
+          'منذ ساعة و دقيقة',
+          'منذ ساعتين و دقيقة',
+        ]
+        const timeElements = document.querySelectorAll('.registration-time')
+
+        timeElements.forEach((element, index) => {
+          if (times[index]) {
+            element.textContent = times[index]
+          }
+        })
+      }
+
+      // تحديث الأوقات كل دقيقة
+      setInterval(updateRegistrationTimes, 60000)
     </script>
-</body>
+  </body>
 </html>
