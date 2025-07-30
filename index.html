@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>مركز التعليم العربي - الصفحة الرئيسية</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Cairo', sans-serif;
+        line-height: 1.6;
+        color: #333;
+        direction: rtl;
+        text-align: right;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 2rem;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10px);
+        text-align: center;
+      }
+
+      .logo {
+        font-size: 4rem;
+        color: #667eea;
+        margin-bottom: 1rem;
+        animation: bounce 2s infinite;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        color: #333;
+        font-weight: 700;
+      }
+
+      .subtitle {
+        font-size: 1.2rem;
+        color: #666;
+        margin-bottom: 2rem;
+        line-height: 1.8;
+      }
+
+      .buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-bottom: 2rem;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 15px 30px;
+        background: linear-gradient(45deg, #667eea, #764ba2);
+        color: white;
+        text-decoration: none;
+        border-radius: 50px;
+        font-weight: 600;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+      }
+
+      .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+      }
+
+      .btn-secondary {
+        background: linear-gradient(45deg, #4caf50, #45a049);
+        box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+      }
+
+      .btn-secondary:hover {
+        box-shadow: 0 8px 25px rgba(76, 175, 80, 0.6);
+      }
+
+      .features {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin-top: 2rem;
+      }
+
+      .feature {
+        padding: 1.5rem;
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: 15px;
+        border: 2px solid rgba(102, 126, 234, 0.1);
+        transition: all 0.3s ease;
+      }
+
+      .feature:hover {
+        transform: translateY(-5px);
+        border-color: rgba(102, 126, 234, 0.3);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .feature-icon {
+        font-size: 2.5rem;
+        color: #667eea;
+        margin-bottom: 1rem;
+      }
+
+      .feature h3 {
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+        color: #333;
+      }
+
+      .feature p {
+        color: #666;
+        font-size: 0.9rem;
+      }
+
+      .footer {
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(102, 126, 234, 0.2);
+        color: #666;
+        font-size: 0.9rem;
+      }
+
+      .status {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: rgba(76, 175, 80, 0.1);
+        color: #4caf50;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+      }
+
+      .pulse {
+        width: 8px;
+        height: 8px;
+        background: #4caf50;
+        border-radius: 50%;
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes bounce {
+        0%,
+        20%,
+        50%,
+        80%,
+        100% {
+          transform: translateY(0);
+        }
+        40% {
+          transform: translateY(-10px);
+        }
+        60% {
+          transform: translateY(-5px);
+        }
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: scale(0.95);
+          box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7);
+        }
+        70% {
+          transform: scale(1);
+          box-shadow: 0 0 0 10px rgba(76, 175, 80, 0);
+        }
+        100% {
+          transform: scale(0.95);
+          box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          margin: 1rem;
+          padding: 1.5rem;
+        }
+
+        h1 {
+          font-size: 2rem;
+        }
+
+        .logo {
+          font-size: 3rem;
+        }
+
+        .buttons {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .btn {
+          width: 100%;
+          max-width: 300px;
+          justify-content: center;
+        }
+
+        .features {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .loading {
+        display: none;
+        margin-top: 1rem;
+      }
+
+      .spinner {
+        border: 3px solid #f3f3f3;
+        border-top: 3px solid #667eea;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        animation: spin 1s linear infinite;
+        margin: 0 auto;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="status">
+        <div class="pulse"></div>
+        موقع تجريبي - جاهز للاستخدام
+      </div>
+
+      <div class="logo">
+        <i class="fas fa-graduation-cap"></i>
+      </div>
+
+      <h1>مركز التعليم العربي</h1>
+      <p class="subtitle">
+        نظام حجز احترافي ومتجاوب للمراكز التعليمية العربية<br />
+        مبني بأحدث التقنيات مع دعم كامل للغة العربية
+      </p>
+
+      <div class="buttons">
+        <a href="register.html" class="btn">
+          <i class="fas fa-user-plus"></i>
+          تسجيل طالب جديد
+        </a>
+        <a href="admin.html" class="btn btn-secondary">
+          <i class="fas fa-cog"></i>
+          لوحة التحكم الإدارية
+        </a>
+      </div>
+
+      <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <p>جاري التحميل...</p>
+      </div>
+
+      <div class="features">
+        <div class="feature">
+          <div class="feature-icon">
+            <i class="fas fa-mobile-alt"></i>
+          </div>
+          <h3>تصميم متجاوب</h3>
+          <p>يعمل بسلاسة على جميع الأجهزة</p>
+        </div>
+
+        <div class="feature">
+          <div class="feature-icon">
+            <i class="fas fa-language"></i>
+          </div>
+          <h3>دعم عربي كامل</h3>
+          <p>واجهة عربية مع دعم RTL</p>
+        </div>
+
+        <div class="feature">
+          <div class="feature-icon">
+            <i class="fas fa-shield-alt"></i>
+          </div>
+          <h3>أمان عالي</h3>
+          <p>حماية البيانات والخصوصية</p>
+        </div>
+
+        <div class="feature">
+          <div class="feature-icon">
+            <i class="fas fa-chart-bar"></i>
+          </div>
+          <h3>تقارير شاملة</h3>
+          <p>إحصائيات وتقارير مفصلة</p>
+        </div>
+      </div>
+
+      <div class="footer">
+        <p>© 2024 مركز التعليم العربي. جميع الحقوق محفوظة.</p>
+        <p>مبني بـ Next.js 14+ و TypeScript و Supabase</p>
+      </div>
+    </div>
+
+    <script>
+      // تأثير تحميل بسيط
+      function showLoading() {
+        const loading = document.getElementById('loading')
+        loading.style.display = 'block'
+        setTimeout(() => {
+          loading.style.display = 'none'
+        }, 1000)
+      }
+
+      // تأثير الكتابة التدريجية للعنوان
+      function typeWriter(element, text, speed = 100) {
+        let i = 0
+        element.innerHTML = ''
+
+        function type() {
+          if (i < text.length) {
+            element.innerHTML += text.charAt(i)
+            i++
+            setTimeout(type, speed)
+          }
+        }
+
+        type()
+      }
+
+      // تشغيل التأثير عند تحميل الصفحة
+      window.addEventListener('load', () => {
+        const title = document.querySelector('h1')
+        const originalText = title.textContent
+        typeWriter(title, originalText, 150)
+      })
+
+      // إضافة تأثيرات تفاعلية
+      document.querySelectorAll('.feature').forEach(feature => {
+        feature.addEventListener('mouseenter', () => {
+          feature.style.transform = 'translateY(-5px) scale(1.02)'
+        })
+
+        feature.addEventListener('mouseleave', () => {
+          feature.style.transform = 'translateY(0) scale(1)'
+        })
+      })
+    </script>
+  </body>
+</html>
